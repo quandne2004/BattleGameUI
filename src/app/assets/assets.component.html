@@ -1,0 +1,51 @@
+<div class="container">
+  <h2>Assets</h2>
+
+  <button (click)="addAsset()" class="btn-add">Add Asset</button>
+
+  <table *ngIf="assets?.length; else noAssets">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Asset Name</th>
+        <th>Type</th>
+        <th style="width:150px;">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let a of assets">
+        <td>{{ a.id }}</td>
+        <td>{{ a.assetName }}</td>
+        <td>{{ a.type }}</td>
+        <td>
+          <button (click)="editAsset(a)">Edit</button>
+          <button (click)="deleteAsset(a.id!)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <ng-template #noAssets>
+    <p>No assets found.</p>
+  </ng-template>
+
+  <div *ngIf="editingAsset" class="edit-form">
+    <h3>{{ editingAsset!.id ? 'Edit Asset' : 'Add Asset' }}</h3>
+    <input
+      type="text"
+      [(ngModel)]="editingAsset!.assetName"
+      placeholder="Asset Name"
+      required
+    />
+    <input
+      type="text"
+      [(ngModel)]="editingAsset!.type"
+      placeholder="Type"
+      required
+    />
+    <div class="buttons">
+      <button (click)="saveAsset()">Save</button>
+      <button (click)="cancelEdit()">Cancel</button>
+    </div>
+  </div>
+</div>

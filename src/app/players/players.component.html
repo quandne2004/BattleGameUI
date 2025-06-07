@@ -1,0 +1,43 @@
+<div class="container">
+  <h2>Players</h2>
+
+  <button (click)="addPlayer()" class="btn-add">Add Player</button>
+
+  <table *ngIf="players?.length; else noPlayers">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th style="width:120px;">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let p of players">
+        <td>{{ p.id }}</td>
+        <td>{{ p.name }}</td>
+        <td>
+          <button (click)="editPlayer(p)">Edit</button>
+          <button (click)="deletePlayer(p.id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <ng-template #noPlayers>
+    <p>No players found.</p>
+  </ng-template>
+
+  <div *ngIf="editingPlayer !== null && editingPlayer !== undefined" class="edit-form">
+    <h3>{{ editingPlayer!.id ? 'Edit Player' : 'Add Player' }}</h3>
+    <input
+      type="text"
+      [(ngModel)]="editingPlayer!.name"
+      placeholder="Player name"
+      [attr.disabled]="editingPlayer ? null : true"
+    />
+    <div class="buttons">
+      <button (click)="savePlayer()">Save</button>
+      <button (click)="cancelEdit()">Cancel</button>
+    </div>
+  </div>
+</div>

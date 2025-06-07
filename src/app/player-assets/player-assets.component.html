@@ -1,0 +1,60 @@
+<div class="container">
+  <h2>Player Assets</h2>
+
+  <button (click)="addPlayerAsset()" class="btn-add">Add Player Asset</button>
+
+  <table *ngIf="playerAssets?.length; else noPlayerAssets">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Player ID</th>
+        <th>Asset ID</th>
+        <th>Quantity</th>
+        <th style="width:150px;">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let pa of playerAssets">
+        <td>{{ pa.id }}</td>
+        <td>{{ pa.playerId }}</td>
+        <td>{{ pa.assetId }}</td>
+        <td>{{ pa.quantity }}</td>
+        <td>
+          <button (click)="editPlayerAsset(pa)">Edit</button>
+          <button (click)="deletePlayerAsset(pa.id!)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <ng-template #noPlayerAssets>
+    <p>No player assets found.</p>
+  </ng-template>
+
+  <div *ngIf="editingPlayerAsset" class="edit-form">
+    <h3>{{ editingPlayerAsset!.id ? 'Edit Player Asset' : 'Add Player Asset' }}</h3>
+    <input
+      type="number"
+      [(ngModel)]="editingPlayerAsset!.playerId"
+      placeholder="Player ID"
+      required
+    />
+    <input
+      type="number"
+      [(ngModel)]="editingPlayerAsset!.assetId"
+      placeholder="Asset ID"
+      required
+    />
+    <input
+      type="number"
+      [(ngModel)]="editingPlayerAsset!.quantity"
+      placeholder="Quantity"
+      required
+      min="1"
+    />
+    <div class="buttons">
+      <button (click)="savePlayerAsset()">Save</button>
+      <button (click)="cancelEdit()">Cancel</button>
+    </div>
+  </div>
+</div>
